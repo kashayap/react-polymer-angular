@@ -9,8 +9,7 @@
 angular.module('commentForm', [])
   .directive('commentForm', function () {
     return {
-      template: '<span id = "timestamp" ng-model="comment.timestamp">{{getDatetime()}}</span>' +
-	  '<form class="commentForm" name="form">' +
+      template:'<form class="commentForm" name="form">' +
                   '<input type="text" placeholder="Your name" ng-model="comment.author" name="author"/>' +
                   '<input type="text" placeholder="Say something..." ng-model="comment.msg" name="msg"/>' +
                   '<input type="submit" value="Post" ng-click="submitComment()"/>' +
@@ -18,9 +17,10 @@ angular.module('commentForm', [])
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         scope.comment = {};
+		scope.comment.timestamp = new Date();
         scope.submitComment = function(){
           var comment = scope.comment;
-		  comment.timestamp = document.getElementById('timestamp').innerHTML;
+		  
           if (!comment.msg || !comment.author) {
             return;
           }
@@ -28,9 +28,6 @@ angular.module('commentForm', [])
           scope.comment = {};
         }
 		
-		scope.getDatetime = function() {
-		return (new Date);
-		};
       }
     };
   });

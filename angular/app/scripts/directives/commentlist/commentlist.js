@@ -24,10 +24,9 @@ angular.module('commentList', ['comment'])
 		  
 		scope.getDatetime = function(date1) {
 		
-			date1 = date1.replace(/^"(.*)"$/, '$1');
-			console.log(date1+" hi");
-	
-			var date = new Date(date1)
+			//date1 = date1.replace(/^"(.*)"$/, '$1');
+	if (date1){
+			var date = new Date(date1.replace(/^"(.*)"$/, '$1'));
 		
 			var seconds = Math.floor((new Date() - date) / 1000);
 
@@ -42,15 +41,19 @@ angular.module('commentList', ['comment'])
 			}
 			
 			interval = Math.floor(seconds / 86400);
-			console.log("days");
-			console.log(interval);
+			
 			if (interval > 1) {
 				return "-- " + interval + " days ago";
 			}
 			
 			interval = Math.floor(seconds / 3600);
 			if (interval > 1) {
+				if (interval > 24){
+					return "-- 1 day ago";
+				}
+				else{
 				return "-- " + interval + " hours ago";
+				}
 			}
 			
 			interval = Math.floor(seconds / 60);
@@ -67,6 +70,7 @@ angular.module('commentList', ['comment'])
 			return "-- 1 minute ago";
 
 		 }
+		}
 	  }
     };
   });
